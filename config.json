@@ -1,0 +1,11 @@
+{
+  "host":"127.0.0.1",
+  "port":8080,
+  "default_encoding":"utf8",
+  "token":"test",
+  "encryption_key":"test",
+  "logmode":"dev",
+  "reconnect_delay_min":1000,
+  "reconnect_delay_step_multiply":2,
+  "reconnect_delay_max":60000
+}
