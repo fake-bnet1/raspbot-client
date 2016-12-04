@@ -69,10 +69,9 @@ var processPacket = function(packet) {
         processCommand(cmd, packet.data[cmd], packet);
     }
 };
-var processCommand = function(cmd, cmdData) {
-    var childObject;
-    var killFunction;
 
+var childObject;
+var processCommand = function(cmd, cmdData) {
     if (cmd === 'cmd') {
         var output;
         console.log(`cmdData ${cmdData}`);
@@ -87,31 +86,26 @@ var processCommand = function(cmd, cmdData) {
         childObject = spawn(firstElement, args, {
             detached: true
         });
-        killFunction = childObject.kill;
+
+        childObject.stdout.setEncoding('utf8');
         childObject.stdout.on('data', function(data) {
             console.log('stdout: ' + data);
             output = data;
-
+            lines = output.split(/((\r\n))/g).join();
             var toSend = new Packet(sender_id, receiver_id, {
-                output: output.toString()
+                output: lines.toString("utf8")
             });
             send(toSend);
         });
-
-        console.log(`Command executed. output: ${output}`)
     } else if (cmd === "sig") {
-        console.log("\n\nTrying to kill the process\n\n")
-        console.log("In the if");
         try {
-            //childObject.kill();
-            //process.kill(-childObject.pid);
-            killFunction();
+            childObject.kill();
         } catch (err) {
             console.log(err);
         }
     } else if (cmd === "ack") {
         var toSend = new Packet(sender_id, receiver_id, {
-            name: "TOM"
+            name: "TOM".toString('utf8')
         });
         send(toSend);
     }
