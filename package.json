@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Someniak/raspbot-client#readme",
   "dependencies": {
     "crypto-js": "^3.1.8",
-    "simple-encryptor": "^1.1.0"
+    "simple-encryptor": "^1.1.0",
+    "utf8": "^2.1.2"
   }
 }

