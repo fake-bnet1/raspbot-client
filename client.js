@@ -6,6 +6,7 @@ var parser = require('./utils/parser');
 var logger = require('./utils/logger');
 var Packet = require('./models/packet')
 var spawn = require('child_process').spawn;
+var StringDecoder = require('string_decoder').StringDecoder;
 
 var sender_id;
 var receiver_id;
@@ -72,8 +73,10 @@ var processPacket = function(packet) {
 
 var childObject;
 var processCommand = function(cmd, cmdData) {
+    var decoder = new StringDecoder('utf8');
     if (cmd === 'cmd') {
         var output;
+
         console.log(`cmdData ${cmdData}`);
 
         var splitted = cmdData.split(' ');
@@ -91,9 +94,8 @@ var processCommand = function(cmd, cmdData) {
         childObject.stdout.on('data', function(data) {
             console.log('stdout: ' + data);
             output = data;
-            lines = output.split(/((\r\n))/g).join();
             var toSend = new Packet(sender_id, receiver_id, {
-                output: lines.toString("utf8")
+                output: decoder.write(data)
             });
             send(toSend);
         });
@@ -105,7 +107,7 @@ var processCommand = function(cmd, cmdData) {
         }
     } else if (cmd === "ack") {
         var toSend = new Packet(sender_id, receiver_id, {
-            name: "TOM".toString('utf8')
+            name: decoder.write("TOM")
         });
         send(toSend);
     }
