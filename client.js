@@ -1,4 +1,4 @@
-var net = require('net');
+var tls = require('tls');
 var crypto = require('./utils/crypto');
 var delay = require('./utils/delay');
 var config = require('./config.json');
@@ -15,7 +15,7 @@ var socketOpen = false;
 
 function openSocket() {
     if (!socketOpen) {
-        baseSocket = net.connect({
+        baseSocket = tls.connect({
             port: config.port,
             host: config.host
         });
