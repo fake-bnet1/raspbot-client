@@ -5,9 +5,10 @@ var config = require('./config.json');
 var parser = require('./utils/parser');
 var logger = require('./utils/logger');
 var Packet = require('./models/packet')
+var spawn = require('child_process').spawn;
 
 var sender_id;
-var reciever_id;
+var receiver_id;
 var baseSocket;
 var socketOpen = false;
 
@@ -37,11 +38,9 @@ var onData = function(socket, cipher) {
         return;
     }
     var packet = parser.decode(data);
+    receiver_id = packet.sender_id;
+    sender_id = packet.receiver_id;
     processPacket(packet);
-    console.log(`-> ${packet.sender_id} : Received packet`);
-    reciever_id = packet.sender_id;
-    sender_id = packet.reciever_id;
-
 };
 var send = function(data) {
     let parsedPacket = parser.encode(data);
@@ -70,10 +69,49 @@ var processPacket = function(packet) {
         processCommand(cmd, packet.data[cmd], packet);
     }
 };
-var processCommand = function(cmd, cdmData) {
-    if (cmd === 'ack') {
-        var toSend = new Packet(sender_id, reciever_id, {
-            output: "I Succesfully recieved the id's"
+var processCommand = function(cmd, cmdData) {
+    var childObject;
+    var killFunction;
+
+    if (cmd === 'cmd') {
+        var output;
+        console.log(`cmdData ${cmdData}`);
+
+        var splitted = cmdData.split(' ');
+        console.log(`splitted: ${splitted}`);
+        var firstElement = splitted[0];
+        splitted.shift();
+        var args = splitted;
+        console.log(`args: ${args}`);
+        if (args === firstElement) args = [];
+        childObject = spawn(firstElement, args, {
+            detached: true
+        });
+        killFunction = childObject.kill;
+        childObject.stdout.on('data', function(data) {
+            console.log('stdout: ' + data);
+            output = data;
+
+            var toSend = new Packet(sender_id, receiver_id, {
+                output: output.toString()
+            });
+            send(toSend);
+        });
+
+        console.log(`Command executed. output: ${output}`)
+    } else if (cmd === "sig") {
+        console.log("\n\nTrying to kill the process\n\n")
+        console.log("In the if");
+        try {
+            //childObject.kill();
+            //process.kill(-childObject.pid);
+            killFunction();
+        } catch (err) {
+            console.log(err);
+        }
+    } else if (cmd === "ack") {
+        var toSend = new Packet(sender_id, receiver_id, {
+            name: "TOM"
         });
         send(toSend);
     }
