@@ -40,8 +40,6 @@ var onData = function(socket, data) {
         return;
     }
     var packet = parser.decode(data);
-    receiver_id = packet.sender_id;
-    sender_id = packet.receiver_id;
     processPacket(packet);
 };
 var send = function(data) {
@@ -101,6 +99,8 @@ var processCommand = function(cmd, cmdData) {
     } else if (cmd === "sig") {
         childObject.kill();
     } else if (cmd === "ack") {
+        receiver_id = packet.sender_id;
+        sender_id = packet.receiver_id;
         var toSend = new Packet(sender_id, receiver_id, {
             name: "TOM"
         });
