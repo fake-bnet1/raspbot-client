@@ -4,7 +4,8 @@ var delay = require('./utils/delay');
 var config = require('./config.json');
 var parser = require('./utils/parser');
 var logger = require('./utils/logger');
-var Packet = require('./models/packet')
+var Packet = require('./models/packet');
+var os = require('os')
 var spawn = require('child_process').spawn;
 
 var sender_id;
@@ -102,7 +103,7 @@ var processCommand = function(cmd, cmdData) {
         receiver_id = packet.sender_id;
         sender_id = packet.receiver_id;
         var toSend = new Packet(sender_id, receiver_id, {
-            name: "TOM"
+            name: os.hostname()
         });
         send(toSend);
     }
