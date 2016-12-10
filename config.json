@@ -1,5 +1,5 @@
 {
-  "host":"172.31.32.143",
+  "host":"cnc.someniak.net",
   "port":8080,
   "default_encoding":"utf8",
   "token":"test",
