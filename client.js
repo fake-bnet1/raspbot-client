@@ -27,6 +27,8 @@ function openSocket() {
             baseSocket.on('data', onData.bind({}, baseSocket));
             baseSocket.on('close', destroySocket.bind({}, baseSocket));
             Processor = require('./processor/processor')(baseSocket);
+            console.log(`Processor: ${Processor}`);
+            
             socketOpen = true;
         }
     } catch (err) {
@@ -45,6 +47,7 @@ var onData = function(socket, data) {
     var packet = parser.decode(data);
     receiver_id = packet.sender_id;
     sender_id = packet.receiver_id;
+    console.log(`Processor: ${Processor}`);
     Processor.processPacket(packet, sender_id, receiver_id);
 };
 
