@@ -1,7 +1,6 @@
 "use strict";
 var Packet = require('../models/packet');
 
-
 module.exports.isValid = function(packet) {
     try {
         Packet.fromJSON(JSON.parse(packet));

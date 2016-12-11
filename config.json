@@ -1,11 +1,11 @@
 {
-  "host":"213.118.206.29",
-  "port":8080,
-  "default_encoding":"utf8",
-  "token":"test",
-  "encryption_key":"T&V^8a9D*HV!njTbcEr*",
-  "logmode":"dev",
-  "reconnect_delay_min":1000,
-  "reconnect_delay_step_multiply":2,
-  "reconnect_delay_max":60000
+    "host": "213.118.206.29",
+    "port": 8080,
+    "default_encoding": "utf8",
+    "token": "test",
+    "encryption_key": "TKBmdUw8ktj9k6tWufy4",
+    "logmode": "dev",
+    "reconnect_delay_min": 1000,
+    "reconnect_delay_step_multiply": 2,
+    "reconnect_delay_max": 60000
 }

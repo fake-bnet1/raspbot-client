@@ -4,7 +4,7 @@ module.exports = function() {
         var self = this;
         var sender_id;
         var receiver_id;
-
+        console.log("base socket: " + baseSocket);
         var processCommand = function(cmd, cmdData) {
             CommandProcessor.processCommand(cmd, cmdData, self.sender_id, self.receiver_id);
         }
