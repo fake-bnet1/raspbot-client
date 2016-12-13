@@ -1,11 +1,11 @@
 //var net = require('net');
-var io = require('socket.io-client')
-var socket = io.connect('http://213.118.206.29:8080', {
+var io = require('socket.io-client');
+var config = require('./config.json');
+var socket = io.connect(`http://${config.host}:${config.port}`, {
     reconnect: true
 });
 var crypto = require('./utils/crypto');
 var delay = require('./utils/delay');
-var config = require('./config.json');
 var parser = require('./utils/parser');
 var logger = require('./utils/logger');
 
