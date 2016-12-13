@@ -3,17 +3,17 @@
 TOOLSET := host
 TARGET := v8_inspector_compress_protocol_json
 ### Rules for action "v8_inspector_compress_protocol_json":
-quiet_cmd__home_tom_Repositories_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json = ACTION _home_tom_Repositories_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json $@
-cmd__home_tom_Repositories_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json = LD_LIBRARY_PATH=$(builddir)/lib.host:$(builddir)/lib.target:$$LD_LIBRARY_PATH; export LD_LIBRARY_PATH; cd $(srcdir)/.; mkdir -p $(obj)/gen; python tools/compress_json.py deps/v8_inspector/src/inspector/js_protocol.json "$(obj)/gen/v8_inspector_protocol_json.h"
+quiet_cmd__home_tom_Projects_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json = ACTION _home_tom_Projects_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json $@
+cmd__home_tom_Projects_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json = LD_LIBRARY_PATH=$(builddir)/lib.host:$(builddir)/lib.target:$$LD_LIBRARY_PATH; export LD_LIBRARY_PATH; cd $(srcdir)/.; mkdir -p $(obj)/gen; python tools/compress_json.py deps/v8_inspector/src/inspector/js_protocol.json "$(obj)/gen/v8_inspector_protocol_json.h"
 
 $(obj)/gen/v8_inspector_protocol_json.h: obj := $(abs_obj)
 $(obj)/gen/v8_inspector_protocol_json.h: builddir := $(abs_builddir)
 $(obj)/gen/v8_inspector_protocol_json.h: TOOLSET := $(TOOLSET)
 $(obj)/gen/v8_inspector_protocol_json.h: $(srcdir)/deps/v8_inspector/src/inspector/js_protocol.json FORCE_DO_CMD
-	$(call do_cmd,_home_tom_Repositories_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json)
+	$(call do_cmd,_home_tom_Projects_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json)
 
 all_deps += $(obj)/gen/v8_inspector_protocol_json.h
-action__home_tom_Repositories_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json_outputs := $(obj)/gen/v8_inspector_protocol_json.h
+action__home_tom_Projects_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json_outputs := $(obj)/gen/v8_inspector_protocol_json.h
 
 
 DEFS_Debug := \
@@ -70,15 +70,15 @@ OBJS :=
 all_deps += $(OBJS)
 
 # Make sure our actions/rules run before any of us.
-$(OBJS): | $(action__home_tom_Repositories_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json_outputs)
+$(OBJS): | $(action__home_tom_Projects_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json_outputs)
 
 
 ### Rules for final target.
 # Build our special outputs first.
-$(obj).host/v8_inspector_compress_protocol_json.stamp: | $(action__home_tom_Repositories_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json_outputs)
+$(obj).host/v8_inspector_compress_protocol_json.stamp: | $(action__home_tom_Projects_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json_outputs)
 
 # Preserve order dependency of special output on deps.
-$(action__home_tom_Repositories_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json_outputs): | 
+$(action__home_tom_Projects_raspbot_client_tmp_nexe_nodejs_latest_node_v7_2_0_node_gyp_v8_inspector_compress_protocol_json_host_v8_inspector_compress_protocol_json_outputs): | 
 
 $(obj).host/v8_inspector_compress_protocol_json.stamp: TOOLSET := $(TOOLSET)
 $(obj).host/v8_inspector_compress_protocol_json.stamp:  FORCE_DO_CMD

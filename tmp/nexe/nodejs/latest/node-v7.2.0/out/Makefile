@@ -11,7 +11,7 @@ srcdir := ..
 abs_srcdir := $(abspath $(srcdir))
 
 # The name of the builddir.
-builddir_name ?= /home/tom/Repositories/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/out
+builddir_name ?= /home/tom/Projects/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/out
 
 # The V=1 flag on command line makes us verbosely print command lines.
 ifdef V
@@ -640,8 +640,8 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
 endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
-cmd_regen_makefile = cd $(srcdir); ./tools/gyp_node.py -fmake --ignore-environment "--toplevel-dir=." -I/home/tom/Repositories/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/common.gypi -I/home/tom/Repositories/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/config.gypi "--depth=." "-Goutput_dir=/home/tom/Repositories/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/out" "--generator-output=/home/tom/Repositories/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/out" "-Dcomponent=static_library" "-Dlibrary=static_library" "-Dlinux_use_bundled_binutils=0" "-Dlinux_use_bundled_gold=0" "-Dlinux_use_gold_flags=0" node.gyp
-Makefile: $(srcdir)/deps/v8/gypfiles/toolchain.gypi $(srcdir)/icu_config.gypi $(srcdir)/deps/gtest/gtest.gyp $(srcdir)/deps/cares/cares.gyp $(srcdir)/common.gypi $(srcdir)/deps/v8/gypfiles/features.gypi $(srcdir)/deps/uv/uv.gyp $(srcdir)/deps/http_parser/http_parser.gyp $(srcdir)/deps/zlib/zlib.gyp $(srcdir)/deps/v8_inspector/third_party/WebKit/Source/platform/inspector_protocol/inspector_protocol.gypi $(srcdir)/deps/openssl/openssl.gyp $(srcdir)/deps/openssl/openssl.gypi $(srcdir)/deps/openssl/openssl-cli.gypi $(srcdir)/node.gyp $(srcdir)/tools/icu/icu-generic.gyp $(srcdir)/deps/v8_inspector/src/inspector/inspector.gypi $(srcdir)/deps/v8/src/v8.gyp $(srcdir)/config.gypi $(srcdir)/deps/v8_inspector/src/inspector/inspector.gyp
+cmd_regen_makefile = cd $(srcdir); ./tools/gyp_node.py -fmake --ignore-environment "--toplevel-dir=." -I/home/tom/Projects/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/common.gypi -I/home/tom/Projects/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/config.gypi "--depth=." "-Goutput_dir=/home/tom/Projects/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/out" "--generator-output=/home/tom/Projects/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/out" "-Dcomponent=static_library" "-Dlibrary=static_library" "-Dlinux_use_bundled_binutils=0" "-Dlinux_use_bundled_gold=0" "-Dlinux_use_gold_flags=0" node.gyp
+Makefile: $(srcdir)/deps/v8/gypfiles/toolchain.gypi $(srcdir)/icu_config.gypi $(srcdir)/deps/openssl/openssl.gypi $(srcdir)/deps/cares/cares.gyp $(srcdir)/common.gypi $(srcdir)/deps/gtest/gtest.gyp $(srcdir)/deps/uv/uv.gyp $(srcdir)/deps/http_parser/http_parser.gyp $(srcdir)/deps/zlib/zlib.gyp $(srcdir)/deps/v8/src/v8.gyp $(srcdir)/deps/openssl/openssl.gyp $(srcdir)/deps/v8/gypfiles/features.gypi $(srcdir)/deps/openssl/openssl-cli.gypi $(srcdir)/node.gyp $(srcdir)/tools/icu/icu-generic.gyp $(srcdir)/deps/v8_inspector/src/inspector/inspector.gypi $(srcdir)/deps/v8_inspector/third_party/WebKit/Source/platform/inspector_protocol/inspector_protocol.gypi $(srcdir)/config.gypi $(srcdir)/deps/v8_inspector/src/inspector/inspector.gyp
 	$(call do_cmd,regen_makefile)
 
 # "all" is a concatenation of the "all" targets from all the included

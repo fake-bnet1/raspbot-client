@@ -1,0 +1,1 @@
+cmd_/home/tom/Projects/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/out/Release/obj.host/v8_inspector_compress_protocol_json.stamp := touch /home/tom/Projects/raspbot-client/tmp/nexe/nodejs/latest/node-v7.2.0/out/Release/obj.host/v8_inspector_compress_protocol_json.stamp
