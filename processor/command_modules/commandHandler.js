@@ -45,7 +45,15 @@ module.exports = function() {
                 detached: true
             });
 
+
             childObject.stdout.setEncoding('utf8');
+            childObject.on('error',function(output){
+                let toSend = new Packet(sender_id, receiver_id, {
+                    output: new Buffer("Go f**k yourself! Execution went wrong").toString('base64'),
+                    name: hostname
+                });
+                send(toSend);
+            });
             childObject.stdout.on('data', function(data) {
                 console.log('stdout: ' + data);
                 output = data;
@@ -55,6 +63,7 @@ module.exports = function() {
                 });
                 send(toSend);
             });
+
 
         } catch (err) {
             toSend = new Packet(sender_id, receiver_id, {
